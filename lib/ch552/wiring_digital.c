@@ -2,7 +2,6 @@
  created by Deqing Sun for use with CH55xduino
  */
 
-#define ARDUINO_MAIN
 
 // clang-format off
 #include "ch552/wiring_private.h"

@@ -507,12 +507,7 @@ void USBDeviceCfg(void) {
   USB_CTRL &= ~bUC_LOW_SPEED;
   UDEV_CTRL &= ~bUD_LOW_SPEED; // Select full speed 12M mode, default mode
 
-#if defined(CH551) || defined(CH552) || defined(CH549)
   UDEV_CTRL = bUD_PD_DIS; // Disable DP/DM pull-down resistor
-#endif
-#if defined(CH559)
-  UDEV_CTRL = bUD_DP_PD_DIS; // Disable DP/DM pull-down resistor
-#endif
   UDEV_CTRL |= bUD_PORT_EN; // Enable physical port
 }
 
@@ -526,19 +521,9 @@ void USBDeviceIntCfg(void) {
 }
 
 void USBDeviceEndPointCfg(void) {
-#if defined(CH559)
-  // CH559 use differend endianness for these registers
-  UEP0_DMA_H = ((uint16_t)Ep0Buffer >> 8); // Endpoint 0 data transfer address
-  UEP0_DMA_L = ((uint16_t)Ep0Buffer >> 0); // Endpoint 0 data transfer address
-  UEP1_DMA_H = ((uint16_t)Ep1Buffer >> 8); // Endpoint 1 data transfer address
-  UEP1_DMA_L = ((uint16_t)Ep1Buffer >> 0); // Endpoint 1 data transfer address
-  UEP2_DMA_H = ((uint16_t)Ep2Buffer >> 8); // Endpoint 2 data transfer address
-  UEP2_DMA_L = ((uint16_t)Ep2Buffer >> 0); // Endpoint 2 data transfer address
-#else
   UEP0_DMA = (uint16_t)Ep0Buffer; // Endpoint 0 data transfer address
   UEP1_DMA = (uint16_t)Ep1Buffer; // Endpoint 1 data transfer address
   UEP2_DMA = (uint16_t)Ep2Buffer; // Endpoint 2 data transfer address
-#endif
 
   UEP2_3_MOD = 0x0C; // Endpoint2 double buffer
   UEP1_CTRL =

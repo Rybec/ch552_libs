@@ -728,10 +728,6 @@ void init(void) {
   UEP2_T_LEN = 0; //????????????
 #endif
 
-  // init PWM
-  PWM_CK_SE = 93; // DIV by 94 for 1K freq on 24M clk
-  PWM_CTRL = 0;
-
   // init T0 for millis
   TMOD = (TMOD & ~0x0F) | (bT0_M1); // mode 2 for autoreload
   T2MOD = T2MOD & ~bT0_CLK;         // bT0_CLK=0;clk Div by 12

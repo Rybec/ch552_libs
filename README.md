@@ -22,13 +22,12 @@ The following have not been fully tested:
 - USB
 
 The following do not work (either failed testing or there is a known bug):
-- USB (specifically USB bootloader, which may require an additional file I have not identified yet)
+- USB (specifically USB bootloader, device does not present COM port when plugged in, probably requires HardwareSerial, which has not been ported yet)
 - TouckKey (the interrupt setup for this is currently in arduino_init.c and needs to be moved to the TouchKey module)
 
 
 ## Current Incomplete Work
-- [x] Make sure everything touched in refactoring still compiles
-- [ ] Test USB bootloader (I came across a bit of code with a #if block, that contains the code for triggering the bootloader with a 1200 baud serial connection.  That block was not being triggered, because the #define constant it was testing was undefined.  I've added it to the compiler arguments in the root Makefile, and I believe that this should make the USB bootloader work now.  It needs testing though.)
+- [X] Test USB bootloader (Failed, device does not present COM port when plugged in.)
 - [ ] Test new PWM module
 - [ ] Test other modules that haven't been tested yet to whatever degree I can.  TouchKey probably does not work, due to missing interrupt code (currently in arudino_init.c).  I can move that to TouchKey and then test.  I don't have C/assembly drivers for the SPI hardware I have (well, I do, for the MSP430, but porting will definitely be pain), so I can't test SPI yet.  I can probably test Servo, as I do have some servos.  Some adjustment might be necessary, as it is probably dependent on the PWM code I moved into its own module (this could be a good test of the PWM module).  I don't know enough about USB to test that module myself.  If USB bootloader triggering works though, that would be a good start.  I have prior experience with porting Arduino SoftI2C to be used outside of Arduino with the ESP32, and it was not pleasant.  I do have some devices I can test it with though, and writing drivers for things like temperature/humidity sensors shouldn't be difficult.
 - [ ] Create optional (hopefully, not sure of dependencies that may exist in other modules) timer module with all of the timer related code.

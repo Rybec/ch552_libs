@@ -25,7 +25,7 @@ XRAM_SIZE=876
 # upload.xdata_location=148
 XRAM_LOCATION=148
 # build.extra_flags=-DEP0_ADDR=0 -DEP1_ADDR=10 -DEP2_ADDR=20
-BUILD_EXTRA_FLAGS=-DEP0_ADDR=0 -DEP1_ADDR=10 -DEP2_ADDR=20 -DBOOT_LOAD_ADDR=0x3800
+BUILD_EXTRA_FLAGS=-DEP0_ADDR=0 -DEP1_ADDR=10 -DEP2_ADDR=20
 
 # USER CODE w/ 0B USB ram (Setting this will disable USB upload)
 # upload.maximum_data_size=1024

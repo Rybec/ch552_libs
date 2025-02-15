@@ -37,6 +37,7 @@ The following do not work (either failed testing or there is a known bug):
 - [ ] wiring_analog only contains analogRead() now, because analogWrite() is not true analog and was moved to the PWM module.  Let's turn wiring_analog into an ADC module, since that's all that's left.
 - [ ] arduino_init.c needs to be eliminated.  It contains code that some of the modules are dependent on.  Anything in it that are dependencies need to be moved to the dependent module, if there is only one, or moved into their own new module if multiple modules are dependent.  Note that arduino_init.c is not currently included in the Makefile tree, so it's not actually being used.  It mostly contains interrupt setup code, including for touchkey, serial communication, timer, USB, and GPIO.  It also contains a barebones main() that demonstrates how to keep USB happy when the USB bootloader is active.
 - [ ] Add some missing elements from ch55xduino, ideally as separate modules.  This includes wiring_analog, HardwareSerial, Serial, Print (maybe), Print-float (maybe), WInterrupts, WMath, and maybe a few others.  The specific files in question are in ch55xduino/ch55xduino/ch55x/cores/ch55xduino, within the ch55xdiuno package.  There are also a couple of subdirectories that probably need to be looked at.
+- [ ] Maybe make assembly delays used in clock.c into a function.  How expensive will it be to calculate cycles to achieve required delay?  Might be possible to make more predictable, by even aligning the function...
 
 
 ## Finished Work

@@ -1,7 +1,7 @@
 CFLAGS=
 
 PWM.rel: PWM.c
-	sdcc --model-small PWM.c -I ../../../include -c $(CFLAGS)
+	sdcc PWM.c -I ../../../include -c $(CFLAGS)
 
 
 clean:

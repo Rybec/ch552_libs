@@ -2,7 +2,7 @@ CFLAGS=
 
 
 SoftI2C.rel: SoftI2C.c
-	sdcc --model-small SoftI2C.c -I ../../../include -c $(CFLAGS)
+	sdcc SoftI2C.c -I ../../../include -c $(CFLAGS)
 
 
 clean:

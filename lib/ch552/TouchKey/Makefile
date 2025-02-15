@@ -1,7 +1,7 @@
 CFLAGS=
 
 TouchKey.rel: TouchKey.c
-	sdcc --model-small TouchKey.c -I ../../../include -c $(CFLAGS)
+	sdcc TouchKey.c -I ../../../include -c $(CFLAGS)
 
 
 clean:

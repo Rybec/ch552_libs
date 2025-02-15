@@ -1,7 +1,7 @@
 CFLAGS=
 
 SPI.rel: SPI.c
-	sdcc --model-small SPI.c -I ../../../include -c $(CFLAGS)
+	sdcc SPI.c -I ../../../include -c $(CFLAGS)
 
 
 clean:

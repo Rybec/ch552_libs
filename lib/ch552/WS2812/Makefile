@@ -3,7 +3,7 @@ CFLAGS=
 
 
 WS2812.rel: WS2812.c
-	sdcc --model-small WS2812.c -I ../../../include -c $(CFLAGS)
+	sdcc WS2812.c -I ../../../include -c $(CFLAGS)
 
 
 clean:

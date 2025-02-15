@@ -4,13 +4,13 @@ all: clock.rel wiring.rel wiring_digital.rel SPI.rel Servo.rel SoftI2C.rel Touch
 
 
 clock.rel: clock.c
-	sdcc --model-small clock.c -I ../../include -c $(CFLAGS)
+	sdcc clock.c -I ../../include -c $(CFLAGS)
 
 wiring.rel: wiring.c
-	sdcc --model-small wiring.c -I ../../include -c $(CFLAGS)
+	sdcc wiring.c -I ../../include -c $(CFLAGS)
 
 wiring_digital.rel: wiring_digital.c
-	sdcc --model-small wiring_digital.c -I ../../include -c $(CFLAGS)
+	sdcc wiring_digital.c -I ../../include -c $(CFLAGS)
 
 
 PWM.rel:

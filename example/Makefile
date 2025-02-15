@@ -55,12 +55,14 @@ BUILD_EXTRA_FLAGS=-DEP0_ADDR=0 -DEP1_ADDR=10 -DEP2_ADDR=20
 
 
 XRAM=--xram-size $(XRAM_SIZE) --xram-loc $(XRAM_LOCATION)
-MEM_SETTINGS=--code-size $(CODE_SIZE) $(XRAM)
+MEM_SETTINGS=--code-size $(CODE_SIZE) $(XRAM) --model-small
 
 CLOCKS=-DF_CPU=$(BUILD_F_CPU) -DF_EXT_OSC=$(BUILD_F_EXT_OSC)
 CPU_SETTINGS=-mmcs51 -D$(BUILD_MCU) $(CLOCKS)
 
-CFLAGS=-DQT_PY_CH552 $(CPU_SETTINGS) $(BUILD_EXTRA_FLAGS) $(MEM_SETTINGS)
+OPTIMIZERS=--auto-stack
+
+CFLAGS=-DQT_PY_CH552 $(CPU_SETTINGS) $(BUILD_EXTRA_FLAGS) $(MEM_SETTINGS) $(OPTIMIZERS)
 
 INCLUDES=ch552_libs/include
 
@@ -68,7 +70,7 @@ PROJECT_RELS=clock.rel PWM.rel WS2812.rel wiring_digital.rel wiring.rel USB.rel 
 
 
 main.ihx: main.c $(PROJECT_RELS)
-	sdcc --model-small main.c $(PROJECT_RELS) -I $(INCLUDES) $(CFLAGS)
+	sdcc main.c $(PROJECT_RELS) -I $(INCLUDES) $(CFLAGS)
 
 clock.rel:
 	$(MAKE) clock.rel -C ch552_libs/lib/ch552 CFLAGS="$(CFLAGS)"

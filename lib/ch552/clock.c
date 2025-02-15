@@ -2,20 +2,23 @@
  created by Deqing Sun for use with CH55xduino
  */
 
-//#include "ch552/wiring_private.h"
+#include "ch552/wiring_private.h"
 
-#include "ch552/ch5xx.h"  // Needed for F_CPU
+#include <ch552/ch5xx.h>  // Needed for F_CPU
 
-
+#define T0_CYCLE 250
 
 void init(void) {
 
   // Assign variables to R0-R2 of register bank 3, to
   // ensure the complier doesn't try to use them for other
   // variables or for stack space.
+  #pragma save
+  #pragma disable_warning 85
   __idata __at (0x18) volatile uint16_t f_cpu_init_delay_count;
   __idata __at (0x1A) volatile uint8_t f_cpu_init_r1_reload;
   __idata __at (0x1B) volatile uint8_t f_cpu_init_a_store;
+  #pragma restore
 
 #if F_EXT_OSC > 0
   // switch to external OSC
@@ -32,7 +35,7 @@ void init(void) {
   //
   // There's some room for optimization here and in the 5,000uS delay below.
   // This only counts the 4 cycles used by the inner DJNZ when it jumps (if
-  // it is at even alignment).  It does not include the 3 extra cycles (1 for
+  // it is at even alignment).  It does not include the 4 extra cycles (2 for
   // MOV, 4 for the outer DJNZ, minus 2 for the inner DJNZ not jumping) when
   // it does not jump and the inner loop is restarted.  In cases where the
   // outer loop has a significant number of iterations, the delay will be
@@ -113,7 +116,7 @@ void init(void) {
 		  "R1_loop:             \n"   // Delay more than 240,000 cycles
 		  "R0_loop:             \n"
 		  "    djnz r0, R0_loop \n"   // 2|4/6  2 when no jump, 6 if on odd address, 4 on even
-		  "    mov r0, r2       \n"   // 1      Reset r0 counter
+		  "    mov r0, 0x1A     \n"   // 2      Reset r0 counter
 		  "    djnz r1, R1_loop \n"   // 2|4/6
 
 		  "    rrc a            \n"   // 1  Restore EA and register bank selection
@@ -226,7 +229,7 @@ void init(void) {
 		  "R1_loop:             \n"   // Delay more than 240,000 cycles
 		  "R0_loop:             \n"
 		  "    djnz r0, R0_loop \n"   // 2|4/6  (Two when no jump, 6 if on odd address, 4 on even)
-		  "    mov r0, r2       \n"   // 1
+		  "    mov r0, 0x1A     \n"   // 2
 		  "    djnz r1, R1_loop \n"   // 2|4/6
 
 		  "    rrc a            \n"   // 1  Restore EA and register bank selection
@@ -238,17 +241,6 @@ void init(void) {
 		  "    mov a, r3        \n"); // 1
 
 
-
-
-#ifndef USER_USB_RAM
-  // init USB
-  USBDeviceCfg();
-  USBDeviceEndPointCfg(); //????
-  USBDeviceIntCfg();      //?????
-  UEP0_T_LEN = 0;
-  UEP1_T_LEN = 0; //????????????
-  UEP2_T_LEN = 0; //????????????
-#endif
 
   // init T0 for millis
   TMOD = (TMOD & ~0x0F) | (bT0_M1); // mode 2 for autoreload

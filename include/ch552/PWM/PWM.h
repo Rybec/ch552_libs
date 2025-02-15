@@ -5,4 +5,4 @@ void PWM_init(void);
 // analogWrite() need changed at the same time.
 void analogWrite(__data uint8_t pin, __xdata uint16_t val);
 
-static void turnOffPWM(__data uint8_t pwm);
+void turnOffPWM(__data uint8_t pwm);

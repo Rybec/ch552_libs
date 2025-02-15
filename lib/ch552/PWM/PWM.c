@@ -1,5 +1,11 @@
+#include "ch552/wiring_private.h"
+#include "ch552/pins_arduino_include.h"
+#include "ch552/wiring_digital.h"
 
-void PWM_init() {
+#include <ch552/ch5xx.h>
+#include <ch552/PWM/PWM.h>
+
+void PWM_init(void) {
 	PWM_CK_SE = 93;  // DIV by 94 for 1K freq on 24M clk
 	PWM_CTRL = 0;
 }
@@ -73,7 +79,7 @@ void analogWrite(__data uint8_t pin, __xdata uint16_t val) {
 
 
 
-static void turnOffPWM(__data uint8_t pwm) {
+void turnOffPWM(__data uint8_t pwm) {
   switch (pwm) {
   case PIN_PWM1:
     if ((PIN_FUNC & bPWM1_PIN_X) == 0) {

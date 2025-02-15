@@ -1,5 +1,8 @@
 CFLAGS=
 
+USB.rel: USB.c
+	sdcc --model-small USB.c -I ../../../include -c $(CFLAGS)
+
 USBhandler.rel: USBhandler.c
 	sdcc --model-small USBhandler.c -I ../../../include -c $(CFLAGS)
 

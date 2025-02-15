@@ -6,12 +6,6 @@
 
 #include "ch552/ch5xx.h"  // Needed for F_CPU
 
-#ifndef USER_USB_RAM
-void USBDeviceCfg(void);
-void USBDeviceIntCfg(void);
-void USBDeviceEndPointCfg(void);
-#endif
-
 
 // These were originally in ch55xduino/ch55x/cores/ch55duino/main.c
 // Given that they are only ever used here in wiring.c, and we don't

@@ -1,13 +1,23 @@
 CFLAGS=
 
-all: wiring.rel wiring_digital.rel SPI.rel Servo.rel SoftI2C.rel TouchKey.rel WS2812.rel
+all: clock.rel wiring.rel wiring_digital.rel SPI.rel Servo.rel SoftI2C.rel TouchKey.rel WS2812.rel
 
+
+clock.rel: clock.c
+	sdcc --model-small clock.c -I ../../include -c $(CFLAGS)
 
 wiring.rel: wiring.c
 	sdcc --model-small wiring.c -I ../../include -c $(CFLAGS)
 
 wiring_digital.rel: wiring_digital.c
 	sdcc --model-small wiring_digital.c -I ../../include -c $(CFLAGS)
+
+
+PWM.rel:
+	$(MAKE) -C PWM CFLAGS="$(CFLAGS)"
+	cp PWM/PWM.rel ./
+	cp PWM/PWM.lst ./
+	cp PWM/PWM.sym ./
 
 SPI.rel:
 	$(MAKE) -C SPI CFLAGS="$(CFLAGS)"
@@ -38,6 +48,12 @@ WS2812.rel:
 	cp WS2812/WS2812.rel ./
 	cp WS2812/WS2812.lst ./
 	cp WS2812/WS2812.sym ./
+
+USB.rel:
+	$(MAKE) -C USB USB.rel CFLAGS="$(CFLAGS)"
+	cp USB/USB.rel ./
+	cp USB/USB.lst ./
+	cp USB/USB.sym ./
 
 USBhandler.rel:
 	$(MAKE) -C USB USBhandler.rel CFLAGS="$(CFLAGS)"

@@ -20,6 +20,13 @@ extern __data uint8_t SetupReq;
 volatile extern __xdata uint8_t UsbConfig;
 extern const __code uint8_t *__data pDescr;
 
+#ifndef USER_USB_RAM
+void USBDeviceCfg(void);
+void USBDeviceIntCfg(void);
+void USBDeviceEndPointCfg(void);
+#endif
+
+
 #define UsbSetupBuf ((PUSB_SETUP_REQ)Ep0Buffer)
 
 // Out

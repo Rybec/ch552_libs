@@ -64,12 +64,17 @@ CFLAGS=-DQT_PY_CH552 $(CPU_SETTINGS) $(BUILD_EXTRA_FLAGS) $(MEM_SETTINGS)
 
 INCLUDES=ch552_libs/include
 
-PROJECT_RELS=WS2812.rel wiring_digital.rel wiring.rel USBhandler.rel USBconstant.rel USBCDC.rel
+PROJECT_RELS=clock.rel PWM.rel WS2812.rel wiring_digital.rel wiring.rel USB.rel USBhandler.rel USBconstant.rel USBCDC.rel
 
 
 main.ihx: main.c $(PROJECT_RELS)
 	sdcc --model-small main.c $(PROJECT_RELS) -I $(INCLUDES) $(CFLAGS)
 
+clock.rel:
+	$(MAKE) clock.rel -C ch552_libs/lib/ch552 CFLAGS="$(CFLAGS)"
+	cp ch552_libs/lib/ch552/clock.rel ./
+	cp ch552_libs/lib/ch552/clock.lst ./
+	cp ch552_libs/lib/ch552/clock.sym ./
 
 wiring.rel:
 	$(MAKE) wiring.rel -C ch552_libs/lib/ch552 CFLAGS="$(CFLAGS)"
@@ -84,11 +89,25 @@ wiring_digital.rel:
 	cp ch552_libs/lib/ch552/wiring_digital.sym ./
 
 
+
+PWM.rel:
+	$(MAKE) PWM.rel -C ch552_libs/lib/ch552 CFLAGS="$(CFLAGS)"
+	cp ch552_libs/lib/ch552/PWM.rel ./
+	cp ch552_libs/lib/ch552/PWM.lst ./
+	cp ch552_libs/lib/ch552/PWM.sym ./
+
 WS2812.rel:
 	$(MAKE) WS2812.rel -C ch552_libs/lib/ch552 CFLAGS="$(CFLAGS)"
 	cp ch552_libs/lib/ch552/WS2812.rel ./
 	cp ch552_libs/lib/ch552/WS2812.lst ./
 	cp ch552_libs/lib/ch552/WS2812.sym ./
+
+
+USB.rel:
+	$(MAKE) USB.rel -C ch552_libs/lib/ch552 CFLAGS="$(CFLAGS)"
+	cp ch552_libs/lib/ch552/USB.rel ./
+	cp ch552_libs/lib/ch552/USB.lst ./
+	cp ch552_libs/lib/ch552/USB.sym ./
 
 
 USBhandler.rel:

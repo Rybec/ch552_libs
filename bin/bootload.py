@@ -4,7 +4,7 @@ import serial
 
 def usage():
 	print("Usage: python bootload.py COMx")
-	sys.ext()
+	sys.exit()
 
 if len(sys.argv) != 2:
 	usage()

@@ -78,6 +78,7 @@ USBCDC.rel:
 
 
 clean:
+	-$(MAKE) -C PWM clean
 	-$(MAKE) -C SPI clean
 	-$(MAKE) -C Servo clean
 	-$(MAKE) -C SoftI2C clean

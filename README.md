@@ -13,6 +13,7 @@ This is going to be used as part of a CH552 programming tutorial for assembly an
 
 At this point (the initial commit), the following have been tested and work:
 - WS2812
+- USB Serial bootloader triggering (open a serial connection at 1200 baud to trigger bootloader)
 
 The following have not been fully tested:
 - SPI
@@ -20,26 +21,28 @@ The following have not been fully tested:
 - SoftI2C
 - TouchKey
 - USB
+- Hardware Serial (should probably be moved into module)
 
 The following do not work (either failed testing or there is a known bug):
-- USB (specifically USB bootloader, device does not present COM port when plugged in, probably requires HardwareSerial, which has not been ported yet)
 - TouckKey (the interrupt setup for this is currently in arduino_init.c and needs to be moved to the TouchKey module)
 
 
 ## Current Incomplete Work
-- [X] Test USB bootloader (Failed, device does not present COM port when plugged in.)
 - [ ] Test new PWM module
-- [ ] Test other modules that haven't been tested yet to whatever degree I can.  TouchKey probably does not work, due to missing interrupt code (currently in arudino_init.c).  I can move that to TouchKey and then test.  I don't have C/assembly drivers for the SPI hardware I have (well, I do, for the MSP430, but porting will definitely be pain), so I can't test SPI yet.  I can probably test Servo, as I do have some servos.  Some adjustment might be necessary, as it is probably dependent on the PWM code I moved into its own module (this could be a good test of the PWM module).  I don't know enough about USB to test that module myself.  If USB bootloader triggering works though, that would be a good start.  I have prior experience with porting Arduino SoftI2C to be used outside of Arduino with the ESP32, and it was not pleasant.  I do have some devices I can test it with though, and writing drivers for things like temperature/humidity sensors shouldn't be difficult.
+- [ ] Test other modules that haven't been tested yet to whatever degree I can.  TouchKey probably does not work, due to missing interrupt code (currently in arudino_init.c).  I can move that to TouchKey and then test.  I don't have C/assembly drivers for the SPI hardware I have (well, I do, for the MSP430, but porting will definitely be pain), so I can't test SPI yet.  I can probably test Servo, as I do have some servos.  Some adjustment might be necessary, as it is probably dependent on the PWM code I moved into its own module (this could be a good test of the PWM module).  I don't know enough about USB to test that module myself.  I have prior experience with porting Arduino SoftI2C to be used outside of Arduino (and in C) with the ESP32, and it was not pleasant.  I do have some devices I can test it with though, and writing drivers for things like temperature/humidity sensors shouldn't be difficult.
+- [ ] Move HardwareSerial to its own module
+- [ ] wiring_analog only contains analogRead() now, because analogWrite() is not true analog and was moved to the PWM module.  Let's turn wiring_analog into an ADC module, since that's all that's left.
 - [ ] Create optional (hopefully, not sure of dependencies that may exist in other modules) timer module with all of the timer related code.
 - [ ] wiring has been used as dumping grounds for miscellaneous code, including clock rate dependent code, timer0 setup and management, timing delay code, and intitialization code.  This stuff should be handled separately, with any order dependencies documented.
 - [ ] wiring_digital needs some refactoring/reorganization.  It currently contains pin configuration code and pin read and write code.
-- [ ] wiring_analog only contains analogRead() now, because analogWrite() is not true analog and was moved to the PWM module.  Let's turn wiring_analog into an ADC module, since that's all that's left.
 - [ ] arduino_init.c needs to be eliminated.  It contains code that some of the modules are dependent on.  Anything in it that are dependencies need to be moved to the dependent module, if there is only one, or moved into their own new module if multiple modules are dependent.  Note that arduino_init.c is not currently included in the Makefile tree, so it's not actually being used.  It mostly contains interrupt setup code, including for touchkey, serial communication, timer, USB, and GPIO.  It also contains a barebones main() that demonstrates how to keep USB happy when the USB bootloader is active.
-- [ ] Add some missing elements from ch55xduino, ideally as separate modules.  This includes wiring_analog, HardwareSerial, Serial, Print (maybe), Print-float (maybe), WInterrupts, WMath, and maybe a few others.  The specific files in question are in ch55xduino/ch55xduino/ch55x/cores/ch55xduino, within the ch55xdiuno package.  There are also a couple of subdirectories that probably need to be looked at.
+- [ ] Add some missing elements from ch55xduino, ideally as separate modules.  This includes Print (maybe), Print-float (maybe), WInterrupts, WMath, and maybe a few others.  The specific files in question are in ch55xduino/ch55xduino/ch55x/cores/ch55xduino, within the ch55xdiuno package.  There are also a couple of subdirectories that probably need to be looked at.
 - [ ] Maybe make assembly delays used in clock.c into a function.  How expensive will it be to calculate cycles to achieve required delay?  Might be possible to make more predictable, by even aligning the function...
+- [ ] main.c in ch55xduino/ch55x/cores/ch55xduino contains a bunch of ISR prototypes and definitions.  We don't want the user to have to include all of this code in main.c directly, so these ISR prototypes need to be moved to appropriate modules, and the ISR definitions need to be moved to appropriate modules and then prototypes for them need to be added to the appropriate header files so they can cleanly be added to main.c without creating a ton of clutter.
 
 
 ## Finished Work
+- USB Serial bootloader triggering fixed!
 - wiring dependency on timer code eliminated (10ms and 5ms calls to timer delay function replaced with assembly loops)
 - Removed from wiring: PWM setup
 - Removed from wiring_digital: PWM disabling code

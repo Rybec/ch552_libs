@@ -52,19 +52,42 @@ BUILD_EXTRA_FLAGS=-DEP0_ADDR=0 -DEP1_ADDR=10 -DEP2_ADDR=20
 # BUILD_EXTRA_FLAGS=-DUSER_USB_RAM=266
 ###########################
 
-
+###########################
+# Stack and Data Segment Notes
+#
+# SDCC puts the data segment and after the highest used register bank by
+# default (unless instructed otherwise, SDCC will only use bank 0).  This
+# means it can end up using register banks used by in-line asm if you don't
+# also declare a C variable at or after that memory address
+# (using __at (hex address)).  It will also use the bit addressable RAM space
+# for data space, if it is not used or allocated in C code.  This can be
+# avoided by specifying where the data space should start, with --data-loc.
+# The first address after the register banks is 0x20, and the first address
+# after the bit addressable space is 0x30.  Note that this is only necessary
+# if you are using in-line assembly or calling assembly code from C code, or
+# if you are calling C modules from assembly code.  Otherwise the compiler
+# will have enough infomation to avoid conflicts.
+#
+# SDCC puts the stack directly after the data segment by default.  If there's
+# some reason to reserve some space between these segments, --stack-loc can be
+# used to specify exactly where the stack should start.  Stack space can be
+# put in the upper 128 bytes of internal RAM this way.
+############################
 
 XRAM=--xram-size $(XRAM_SIZE) --xram-loc $(XRAM_LOCATION)
 MEM_SETTINGS=--code-size $(CODE_SIZE) $(XRAM) --model-small
 
+
 CLOCKS=-DF_CPU=$(BUILD_F_CPU) -DF_EXT_OSC=$(BUILD_F_EXT_OSC)
 CPU_SETTINGS=-mmcs51 -D$(BUILD_MCU) $(CLOCKS)
 
-OPTIMIZERS=--auto-stack
+OPTIMIZERS=
 
 CFLAGS=-DQT_PY_CH552 $(CPU_SETTINGS) $(BUILD_EXTRA_FLAGS) $(MEM_SETTINGS) $(OPTIMIZERS)
 
 INCLUDES=ch552_libs/include
+
+#PROJECT_RELS=clock.rel PWM.rel WS2812.rel wiring_digital.rel wiring.rel HardwareSerial0.rel HardwareSerial0ISR.rel HardwareSerial1.rel HardwareSerial1ISR.rel USB.rel USBhandler.rel USBconstant.rel USBCDC.rel
 
 PROJECT_RELS=clock.rel PWM.rel WS2812.rel wiring_digital.rel wiring.rel USB.rel USBhandler.rel USBconstant.rel USBCDC.rel
 
@@ -89,6 +112,31 @@ wiring_digital.rel:
 	cp ch552_libs/lib/ch552/wiring_digital.rel ./
 	cp ch552_libs/lib/ch552/wiring_digital.lst ./
 	cp ch552_libs/lib/ch552/wiring_digital.sym ./
+
+HardwareSerial0.rel:
+	$(MAKE) HardwareSerial0.rel -C ch552_libs/lib/ch552 CFLAGS="$(CFLAGS)"
+	cp ch552_libs/lib/ch552/HardwareSerial0.rel ./
+	cp ch552_libs/lib/ch552/HardwareSerial0.lst ./
+	cp ch552_libs/lib/ch552/HardwareSerial0.sym ./
+
+HardwareSerial0ISR.rel:
+	$(MAKE) HardwareSerial0ISR.rel -C ch552_libs/lib/ch552 CFLAGS="$(CFLAGS)"
+	cp ch552_libs/lib/ch552/HardwareSerial0ISR.rel ./
+	cp ch552_libs/lib/ch552/HardwareSerial0ISR.lst ./
+	cp ch552_libs/lib/ch552/HardwareSerial0ISR.sym ./
+
+HardwareSerial1.rel:
+	$(MAKE) HardwareSerial1.rel -C ch552_libs/lib/ch552 CFLAGS="$(CFLAGS)"
+	cp ch552_libs/lib/ch552/HardwareSerial1.rel ./
+	cp ch552_libs/lib/ch552/HardwareSerial1.lst ./
+	cp ch552_libs/lib/ch552/HardwareSerial1.sym ./
+
+HardwareSerial1ISR.rel:
+	$(MAKE) HardwareSerial1ISR.rel -C ch552_libs/lib/ch552 CFLAGS="$(CFLAGS)"
+	cp ch552_libs/lib/ch552/HardwareSerial1ISR.rel ./
+	cp ch552_libs/lib/ch552/HardwareSerial1ISR.lst ./
+	cp ch552_libs/lib/ch552/HardwareSerial1ISR.sym ./
+
 
 
 

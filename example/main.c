@@ -6,7 +6,7 @@
 #include <ch552/wiring.h>         // For delay(), init()
 #include <ch552/wiring_digital.h> // For pinMode()
 #include <ch552/WS2812/WS2812.h>  // For NeoPixel functions/macros
-#include <ch552/USB/USB.h>
+#include <ch552/USB/USB.h>        // For USB_init() and USBDeviceInterrupt()
 
 
 #define NEOPIXEL_PIN P1_0

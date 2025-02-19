@@ -13,3 +13,9 @@ void USB_init(void) {
 	UEP1_T_LEN = 0;
 	UEP2_T_LEN = 0;
 }
+
+
+void DeviceUSBInterrupt(void) __interrupt(INT_NO_USB) {
+	USBInterrupt();
+}
+

@@ -12,6 +12,20 @@ wiring.rel: wiring.c
 wiring_digital.rel: wiring_digital.c
 	sdcc wiring_digital.c -I ../../include -c $(CFLAGS)
 
+HardwareSerial0.rel: HardwareSerial0.c
+	sdcc HardwareSerial0.c -I ../../include -c $(CFLAGS)
+
+HardwareSerial0ISR.rel: HardwareSerial0ISR.c
+	sdcc HardwareSerial0ISR.c -I ../../include -c $(CFLAGS)
+
+HardwareSerial1.rel: HardwareSerial1.c
+	sdcc HardwareSerial1.c -I ../../include -c $(CFLAGS)
+
+HardwareSerial1ISR.rel: HardwareSerial1ISR.c
+	sdcc HardwareSerial1ISR.c -I ../../include -c $(CFLAGS)
+
+
+
 
 PWM.rel:
 	$(MAKE) -C PWM CFLAGS="$(CFLAGS)"

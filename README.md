@@ -11,7 +11,7 @@ This is going to be used as part of a CH552 programming tutorial for assembly an
 
 ## What Works and What Does Not
 
-At this point (the initial commit), the following have been tested and work:
+At this point, the following have been tested and work:
 - WS2812
 - USB Serial bootloader triggering (open a serial connection at 1200 baud to trigger bootloader)
 

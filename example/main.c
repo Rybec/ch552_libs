@@ -1,9 +1,9 @@
 #include <stdint.h>  // For bit specific integer types (eg. uint8_t)
 
 
-#include <ch552/ch5xx.h>          // For OUTPUT macro
-#include <ch552/clock.h>
-#include <ch552/wiring.h>         // For delay(), init()
+#include <ch552/ch552.h>          // For OUTPUT macro
+#include <ch552/clock.h>          // For init()
+#include <ch552/timer.h>          // For delay()
 #include <ch552/wiring_digital.h> // For pinMode()
 #include <ch552/WS2812/WS2812.h>  // For NeoPixel functions/macros
 #include <ch552/USB/USB.h>        // For USB_init() and USBDeviceInterrupt()

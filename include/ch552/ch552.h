@@ -34,8 +34,6 @@ Header file for CH554 microcontrollers.
 
 #define bit(b) (1UL << (b))
 
-void delayMicroseconds(__data uint16_t us);
-
 // This should honestly go somewhere else (even in Arduino).
 void USBSerial_flush(void);
 //######

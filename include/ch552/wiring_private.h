@@ -4,7 +4,7 @@
 // clang-format off
 #include <stdint.h>
 #include <stdio.h>
-#include "ch552/ch5xx.h"
+#include "ch552/ch552.h"
 #include "ch552/ch5xx_usb.h"
 //#include "Arduino.h"
 

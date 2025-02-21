@@ -4,7 +4,7 @@
 
 #include "ch552/wiring_private.h"
 
-#include "ch552/ch5xx.h"  // Needed for F_CPU
+#include "ch552/ch552.h"  // Needed for F_CPU
 
 
 // These were originally in ch55xduino/ch55x/cores/ch55duino/main.c

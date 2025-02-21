@@ -2,7 +2,7 @@
 #include "ch552/pins_arduino_include.h"
 #include "ch552/wiring_digital.h"
 
-#include <ch552/ch5xx.h>
+#include <ch552/ch552.h>
 #include <ch552/PWM/PWM.h>
 
 void PWM_init(void) {

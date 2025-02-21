@@ -5,7 +5,7 @@
 
 // clang-format off
 #include <stdint.h>
-#include "ch552/ch5xx.h"
+#include "ch552/ch552.h"
 #include "ch552/ch5xx_usb.h"
 // clang-format on
 

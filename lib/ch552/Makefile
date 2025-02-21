@@ -6,8 +6,8 @@ all: clock.rel wiring.rel wiring_digital.rel SPI.rel Servo.rel SoftI2C.rel Touch
 clock.rel: clock.c
 	sdcc clock.c -I ../../include -c $(CFLAGS)
 
-wiring.rel: wiring.c
-	sdcc wiring.c -I ../../include -c $(CFLAGS)
+timer.rel: timer.c
+	sdcc timer.c -I ../../include -c $(CFLAGS)
 
 wiring_digital.rel: wiring_digital.c
 	sdcc wiring_digital.c -I ../../include -c $(CFLAGS)

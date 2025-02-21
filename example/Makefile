@@ -92,7 +92,7 @@ INCLUDES=ch552_libs/include
 
 #PROJECT_RELS=clock.rel PWM.rel WS2812.rel wiring_digital.rel wiring.rel HardwareSerial0.rel HardwareSerial0ISR.rel HardwareSerial1.rel HardwareSerial1ISR.rel USB.rel USBhandler.rel USBconstant.rel USBCDC.rel
 
-PROJECT_RELS=clock.rel PWM.rel WS2812.rel wiring_digital.rel wiring.rel USB.rel USBhandler.rel USBconstant.rel USBCDC.rel
+PROJECT_RELS=clock.rel PWM.rel WS2812.rel wiring_digital.rel timer.rel USB.rel USBhandler.rel USBconstant.rel USBCDC.rel
 
 
 main.ihx: main.c $(PROJECT_RELS)
@@ -104,11 +104,11 @@ clock.rel:
 	cp ch552_libs/lib/ch552/clock.lst ./
 	cp ch552_libs/lib/ch552/clock.sym ./
 
-wiring.rel:
-	$(MAKE) wiring.rel -C ch552_libs/lib/ch552 CFLAGS="$(CFLAGS)"
-	cp ch552_libs/lib/ch552/wiring.rel ./
-	cp ch552_libs/lib/ch552/wiring.lst ./
-	cp ch552_libs/lib/ch552/wiring.sym ./
+timer.rel:
+	$(MAKE) timer.rel -C ch552_libs/lib/ch552 CFLAGS="$(CFLAGS)"
+	cp ch552_libs/lib/ch552/timer.rel ./
+	cp ch552_libs/lib/ch552/timer.lst ./
+	cp ch552_libs/lib/ch552/timer.sym ./
 
 wiring_digital.rel:
 	$(MAKE) wiring_digital.rel -C ch552_libs/lib/ch552 CFLAGS="$(CFLAGS)"

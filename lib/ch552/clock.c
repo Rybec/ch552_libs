@@ -115,9 +115,9 @@ void init(void) {
 
 		  "R1_loop:             \n"   // Delay more than 240,000 cycles
 		  "R0_loop:             \n"
-		  "    djnz r0, R0_loop \n"   // 2|4/6  2 when no jump, 6 if on odd address, 4 on even
+		  "    djnz r0, R0_loop \n"   // 2|4/8  2 when no jump, 8 if on odd address, 4 on even
 		  "    mov r0, 0x1A     \n"   // 2      Reset r0 counter
-		  "    djnz r1, R1_loop \n"   // 2|4/6
+		  "    djnz r1, R1_loop \n"   // 2|4/8
 
 		  "    rrc a            \n"   // 1  Restore EA and register bank selection
 		  "    mov _RS0, c      \n"   // 2
@@ -228,9 +228,9 @@ void init(void) {
 
 		  "R1_loop:             \n"   // Delay more than 240,000 cycles
 		  "R0_loop:             \n"
-		  "    djnz r0, R0_loop \n"   // 2|4/6  (Two when no jump, 6 if on odd address, 4 on even)
+		  "    djnz r0, R0_loop \n"   // 2|4/8  (Two when no jump, 8 if on odd address, 4 on even)
 		  "    mov r0, 0x1A     \n"   // 2
-		  "    djnz r1, R1_loop \n"   // 2|4/6
+		  "    djnz r1, R1_loop \n"   // 2|4/8
 
 		  "    rrc a            \n"   // 1  Restore EA and register bank selection
 		  "    mov _RS0, c      \n"   // 2
@@ -240,15 +240,4 @@ void init(void) {
 		  "    mov _EA, c       \n"   // 2
 		  "    mov a, r3        \n"); // 1
 
-
-
-  // init T0 for millis
-  TMOD = (TMOD & ~0x0F) | (bT0_M1); // mode 2 for autoreload
-  T2MOD = T2MOD & ~bT0_CLK;         // bT0_CLK=0;clk Div by 12
-  TH0 = 255 - T0_CYCLE + 1;
-  TF0 = 0;
-  ET0 = 1;
-  TR0 = 1;
-
-  EA = 1; // millis and delay needs interrupt
 }

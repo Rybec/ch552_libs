@@ -21,6 +21,19 @@ __idata __at (0x0C) volatile uint8_t timer0_overflow_count_5th_byte = 0;
 #define T0_CYCLE 250
 
 
+void timer0_init(void) {
+	TMOD = (TMOD & ~0x0F) | (bT0_M1);  // Mode 2 for autoreload
+	T2MOD = T2MOD & ~bT0_CLK;          // bT0_CLK=0;clk Div by 12
+	TH0 = 255 - T0_CYCLE + 1;
+	TF0 = 0;
+	ET0 = 1;
+	TR0 = 1;
+
+	EA = 1;
+}
+
+
+
 // using register bank 1
 void Timer0Interrupt(void) __interrupt(INT_NO_TMR0) __using(1) {
   /*timer0_overflow_count++;

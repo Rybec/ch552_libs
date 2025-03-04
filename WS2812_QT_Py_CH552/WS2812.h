@@ -15,6 +15,8 @@
 #include <stdint.h>
 // clang-format on
 
+__sbit __at(0x90) P1_0;
+__sbit __at(0xAF) EA;
 
 #if !defined(_STRINGIFY)
 #define _STRINGIFY(x) #x
